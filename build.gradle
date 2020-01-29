@@ -11,7 +11,10 @@ group "micronaut.liquibase.example"
 
 repositories {
     mavenCentral()
-    maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
+    maven {
+        url "https://oss.sonatype.org/content/repositories/snapshots"
+    }
+    jcenter()
 }
 
 configurations {
@@ -38,6 +41,12 @@ dependencies {
     testImplementation "io.micronaut.test:micronaut-test-spock"
     testImplementation "io.micronaut.test:micronaut-test-junit5"
     testRuntimeOnly "org.junit.vintage:junit-vintage-engine:5.5.0"
+
+    // added for gorm h2
+    runtimeOnly "com.h2database:h2:$h2Version"
+    implementation "io.micronaut.configuration:micronaut-hibernate-gorm"
+    implementation "org.grails:grails-datastore-gorm-hibernate5:$gormVersion"
+    runtimeOnly "io.micronaut.configuration:micronaut-jdbc-hikari"
 }
 
 test.classpath += configurations.developmentOnly
