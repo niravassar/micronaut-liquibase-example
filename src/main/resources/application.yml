@@ -5,7 +5,7 @@ micronaut:
 # Persistence
 hibernate:
   hbm2ddl:
-    auto: 'update'
+    auto: 'none'
   show_sql: false
 dataSource:
   url: 'jdbc:h2:file:./devDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE;AUTO_SERVER=TRUE'
@@ -13,5 +13,18 @@ dataSource:
   password: ''
   driverClassName: 'org.h2.Driver'
   dialect: 'H2'
-  schemaGenerate: 'CREATE-DROP'
 ---
+# Liquibase configuration to make it aware of the database
+datasources:
+  default:
+    url: 'jdbc:h2:file:./devDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE;AUTO_SERVER=TRUE'
+    username: 'sa'
+    password: ''
+    driverClassName: 'org.h2.Driver'
+---
+# Liquibase changelog
+liquibase:
+  datasources:
+    default:
+      change-log: 'classpath:db/liquibase-changelog.xml'
+
